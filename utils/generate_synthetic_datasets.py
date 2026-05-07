@@ -8,9 +8,9 @@ import os
 # -----------------------------
 def generate_gaussian_clusters(
     n_samples=500,
-    n_features=50,
-    n_informative=15,
-    n_redundant=15,
+    n_features=10,
+    n_informative=8,
+    n_redundant=2,
     n_classes=2,
     random_state=42
 ):
@@ -35,7 +35,7 @@ def generate_gaussian_clusters(
 # -----------------------------
 def generate_random_noise(
     n_samples=500,
-    n_features=50,
+    n_features=10,
     random_state=42
 ):
     rng = np.random.RandomState(random_state)
@@ -54,7 +54,7 @@ def generate_random_noise(
 # -----------------------------
 def generate_swiss_roll_50d(
     n_samples=500,
-    n_features=50,
+    n_features=10,
     noise=0.1,
     random_state=42
 ):

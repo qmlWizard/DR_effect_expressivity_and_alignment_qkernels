@@ -1,4 +1,4 @@
-Datasets:
+-Datasets:
 
     Synthetic
         1. Gaussian Clusters
@@ -25,7 +25,7 @@ Datasets:
             4. Autoencoders
             5. Feature Selection (e.g., SelectKBest / Mutual Info)
 
-Kernel:
+-Kernel:
     Fidelity Kernel
 
     Embeddings
@@ -125,7 +125,7 @@ Experiments
         Expected Insight
             1. Lower dimension → smoother optimization
 
-Metrics
+-Metrics
     Primary
         1. Accuracy
         2. KTA
