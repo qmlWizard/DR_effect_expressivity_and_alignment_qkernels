@@ -1,146 +1,139 @@
--Datasets:
+    -Datasets:
 
-    Synthetic
-        1. Gaussian Clusters
-        2. Random noise dataset
-        3. Swiss roll dataset
+        Synthetic
+            1. Gaussian Clusters
+            2. Random noise dataset
+            3. Swiss roll dataset
 
-    Real World
-        1. MNIST
-        2. Fashion MNIST
-        3. Parkinsons
-        4. Madelon
-        5. Isolet
+        --> For all datasets create .npy files for reduced dimensions of {2, 4, 6, 8}
+        --> Data Preprocessing Pipeline
+                1. Standardise (mean 0, variance 1)
+                2. Apply DR
+                3. Normalise (min-max scaling - [-pi/2 to pi/2])
 
-    --> For all datasets create .npy files for reduced dimensions of {4, 6, 8, 10, 12}
-    --> Data Preprocessing Pipeline
-            1. Standardise (mean 0, variance 1)
-            2. Apply DR
-            3. Normalise (min-max scaling - [-pi/2 to pi/2])
+        --> DR Techniques
+                1. PCA
+                2. Random Projection
+                3. UMAP
+                4. Autoencoders
+                5. Feature Selection (e.g., SelectKBest / Mutual Info)
 
-    --> DR Techniques
-            1. PCA
-            2. Random Projection
-            3. UMAP
-            4. Autoencoders
-            5. Feature Selection (e.g., SelectKBest / Mutual Info)
+    -Kernel:
+        Fidelity Kernel
 
--Kernel:
-    Fidelity Kernel
+        Embeddings
+            1. ZZFeaturemap
+            2. Angle Embeddings (Data Re-uploading Circuit (fixed))
 
-    Embeddings
-        1. ZZFeaturemap
-        2. Angle Embeddings (Data Re-uploading Circuit (fixed))
+        Alignment Method
+            1. KTA
+                1. Full KTA
+                2. Random Sampling
 
-    Alignment Method
-        1. KTA
-            1. Full KTA
-            2. Random Sampling
-
-Reseach Objectives
-    To systematically investigate how classical dimensionality reduction influences the expressivity, 
-    stability, and alignment performance of quantum kernel methods across different data regimes.
-    
-        1. Quantify Compression–Expressivity Trade-off
-            Identify whether an optimal reduced dimension d′∗ exists.
-
-        2. Analyze the Impact of DR Geometry on Quantum Kernels
-            Understand how different geometric assumptions influence kernel structure and alignment.
+    Reseach Objectives
+        To systematically investigate how classical dimensionality reduction influences the expressivity, 
+        stability, and alignment performance of quantum kernel methods across different data regimes.
         
-        3. Study Kernel Concentration and Spectral Properties
-            Determine whether dimensionality reduction mitigates kernel concentration (barren behavior).
+            1. Quantify Compression–Expressivity Trade-off
+                Identify whether an optimal reduced dimension d′∗ exists.
 
-        4. Examine Kernel Alignment Behavior Under Dimensional Constraints
-            Determine whether reduced dimensionality leads to more stable and efficient alignment optimization.
+            2. Analyze the Impact of DR Geometry on Quantum Kernels
+                Understand how different geometric assumptions influence kernel structure and alignment.
+            
+            3. Study Kernel Concentration and Spectral Properties
+                Determine whether dimensionality reduction mitigates kernel concentration (barren behavior).
 
-    Expected Outcomes (What These Objectives Lead To)
-        1. Identification of an optimal dimensionality regime for quantum kernels 
-        2. Evidence that dimensionality reduction acts as an implicit regularizer
-        3. Insights into how classical preprocessing shapes quantum feature spaces
-        4. Practical guidelines for scalable quantum kernel design
+            4. Examine Kernel Alignment Behavior Under Dimensional Constraints
+                Determine whether reduced dimensionality leads to more stable and efficient alignment optimization.
 
-Experiments
-    1. Experiment 1 — Compression vs Performance (Core Result)
+        Expected Outcomes (What These Objectives Lead To)
+            1. Identification of an optimal dimensionality regime for quantum kernels 
+            2. Evidence that dimensionality reduction acts as an implicit regularizer
+            3. Insights into how classical preprocessing shapes quantum feature spaces
+            4. Practical guidelines for scalable quantum kernel design
 
-        Identify the optimal reduced dimension d'
+    Experiments
+        1. Experiment 1 — Compression vs Performance (Core Result)
 
-        Measure
+            Identify the optimal reduced dimension d'
+
+            Measure
+                1. Accuracy
+                2. KTA
+                3. Kernel variance
+            
+            Output plots
+                1. Accuracy vs d'
+                2. KTA vs d'
+
+            Expected Insight: There exists an optimal d′ per DR method (sweet spot)
+        
+        2. Experiment 2 — Effect of DR Method
+
+            Understand how geometry preservation affects kernels
+
+            Measure
+                1. KTA
+                2. Accuracy
+                3. Kernel eigenvalue spectrum
+
+            Output
+                1. Bar plots (method vs performance)
+                2. Spectrum plots
+            
+            Expected Insight
+                1. PCA → stable
+                2. RP → similar but noisier
+                3. UMAP → nonlinear boost but unstable
+                4. FS → strong in noisy datasets
+
+        3. Experiment 3 — Kernel Expressivity Analysis (Important)
+
+            Quantify kernel concentration vs dimension
+                
+            Measure
+                1. Kernel variance
+                2. Eigenvalue decay
+                3. Effective rank
+
+            Output
+                1. Variance vs d'
+                2. Spectrum plots
+                
+            Expected Insight
+                1. High dimension → kernel concentration
+                2. DR mitigates it
+
+        4. Experiment 4 — Alignment Behavior vs Dimension
+
+            Study how DR affects KTA optimization stability
+
+            Measure
+                1. KTA convergence (iterations)
+                2. Variance across runs
+
+            Output
+                1. KTA vs iteration curves
+            
+            Expected Insight
+                1. Lower dimension → smoother optimization
+
+    -Metrics
+        Primary
             1. Accuracy
             2. KTA
-            3. Kernel variance
-        
-        Output plots
-            1. Accuracy vs d'
-            2. KTA vs d'
-
-        Expected Insight: There exists an optimal d′ per DR method (sweet spot)
-    
-    2. Experiment 2 — Effect of DR Method
-
-        Understand how geometry preservation affects kernels
-
-        Measure
-            1. KTA
-            2. Accuracy
-            3. Kernel eigenvalue spectrum
-
-        Output
-            1. Bar plots (method vs performance)
-            2. Spectrum plots
-        
-        Expected Insight
-            1. PCA → stable
-            2. RP → similar but noisier
-            3. UMAP → nonlinear boost but unstable
-            4. FS → strong in noisy datasets
-
-    3. Experiment 3 — Kernel Expressivity Analysis (Important)
-
-        Quantify kernel concentration vs dimension
-            
-        Measure
+        Secondary
             1. Kernel variance
-            2. Eigenvalue decay
+            2. Eigenvalue spectrum
             3. Effective rank
+        Computational
+            1. Circuit evaluations
+            2. Runtime
 
-        Output
-            1. Variance vs d'
-            2. Spectrum plots
-            
-        Expected Insight
-            1. High dimension → kernel concentration
-            2. DR mitigates it
-
-    4. Experiment 4 — Alignment Behavior vs Dimension
-
-        Study how DR affects KTA optimization stability
-
-        Measure
-            1. KTA convergence (iterations)
-            2. Variance across runs
-
-        Output
-            1. KTA vs iteration curves
-        
-        Expected Insight
-            1. Lower dimension → smoother optimization
-
--Metrics
-    Primary
-        1. Accuracy
-        2. KTA
-    Secondary
-        1. Kernel variance
-        2. Eigenvalue spectrum
-        3. Effective rank
-    Computational
-        1. Circuit evaluations
-        2. Runtime
-
-Clean Mapping (Important for Paper Writing)
-    Objective	                Experiment
-    Compression–Expressivity	Exp 1
-    DR Geometry Impact	        Exp 2
-    Kernel Concentration	    Exp 3
-    Alignment Stability	        Exp 4
-    Scalability of KTA	        Exp 5
+    Clean Mapping (Important for Paper Writing)
+        Objective	                Experiment
+        Compression–Expressivity	Exp 1
+        DR Geometry Impact	        Exp 2
+        Kernel Concentration	    Exp 3
+        Alignment Stability	        Exp 4
+        Scalability of KTA	        Exp 5
