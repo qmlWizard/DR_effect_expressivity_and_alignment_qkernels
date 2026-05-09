@@ -30,7 +30,7 @@ SEEDS = [0, 1, 2]
 # KTA Hyperparameters
 # -----------------------------------------------------------------------------
 
-EPOCHS = 100
+EPOCHS = 20
 LEARNING_RATE = 0.2
 RANDOM_SAMPLES = 8
 CENTERING = True

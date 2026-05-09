@@ -16,6 +16,12 @@ DATASETS = [
     "gaussian",
     "noise",
     "swiss_roll",
+    "helix",
+    "torus",
+    "mobius",
+    "lorenz",
+    "two_moons",
+    "sierpinski",
     "parkinsons",
     "madelon",
     "isolet"
